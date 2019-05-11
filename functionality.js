@@ -9,11 +9,13 @@ function showFile() {
 }
 
 let Data = [];
+let Users = {};
 
 function analysisDo() {
+	document.getElementById("loading").style.visibility = "visible";
 	let preview = document.getElementById('show-text');
 	let text = preview.innerHTML;
-	let pattern = /\n(?=\d+\/)/;
+	let pattern = /\n(?=\d+\/\d+\/\d+)/;
 	let comp = text.split(pattern);
 
 	for (let i=0;i<comp.length-1; i++) {
@@ -22,7 +24,7 @@ function analysisDo() {
 		let split1 = date.split(" ");
 		let split2 = split1[0].split("/");
 		let day = parseInt(split2[0]);
-		let month = parseInt(split2[1]);
+		let month = parseInt(split2[1]) - 1;
 		let year = 2000 + parseInt(split2[2]);
 		split2 = split1[1].split(":");
 		let hour = parseInt(split2[0]);
@@ -43,10 +45,42 @@ function analysisDo() {
 		Data.push(data);
 
 	}
-	console.log(Data);
+
+	//ANALYZE USERS
+	let chunk = 1;
+	for (let i=0; i < Data.length; i++){
+		if (Data[i].sender in Users) {
+			Users[Data[i].sender].count += 1;
+			if (Data[i].sender === Data[i-1].sender) {
+				chunk +=1
+			}
+			else {
+				Users[Data[i-1].sender].chunk.push(chunk);
+				chunk = 1;
+				Users[Data[i].sender].delay.push((Data[i].date - Data[i - 1].date)/60000);
+			}
+		}
+		else {
+			Users[Data[i].sender] = {
+				"count": 1,
+				"delay": [],
+				"chunk": [],
+			};
+		}
+	}
+
+	console.log(Users);
 	let total = Data.length;
-	console.log(total);
-    document.getElementById("total_num").innerHTML = total.toString();
+	let start = Data[0].date;
+	let last = Data[total-1].date;
+	let total_text = "Total: " + total.toString();
+	for (let key in Users) {
+		total_text +=  "<br>" + "\n User: " + key + " Count: " + Users[key].count;
+	}
+    document.getElementById("total_num").innerHTML = total_text;
+    document.getElementById("start-date").innerHTML= "Start date: " + start.toDateString();
+	document.getElementById("end-date").innerHTML= "End date: " + last.toDateString();
+	document.getElementById("loading").style.display = "none";
     document.getElementById("analysis-results").style.visibility = "visible";
 
 }
