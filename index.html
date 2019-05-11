@@ -7,9 +7,16 @@
 <body>
 	<header>
 		<input type="file" onchange="showFile()">
+		<button type="button" onclick="analysisDo()"> Analyze </button>
 	</header>
 	<div id="show-text" hidden></div>
 	<br>
-	<button type="button" onclick="analysisDo()"> Analyze </button>
+	<div id="analysis-results" style="visibility: hidden;">
+		<div id="total_num"></div>
+		<div id="start-date"></div>
+		<div id="end-date"></div>
+	</div>
+
+
 </body>
 </html>

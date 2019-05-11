@@ -3,9 +3,8 @@ function showFile() {
 	let file = document.querySelector('input[type=file]').files[0];
 	let rdr = new FileReader(file);
 	rdr.onload = function (event) {
-		let content = event.target.result;
-		preview.textContent = content;
-	}
+        preview.textContent = event.target.result;
+	};
 	rdr.readAsText(file);
 }
 
@@ -16,8 +15,6 @@ function analysisDo() {
 	let text = preview.innerHTML;
 	let pattern = /\n(?=\d+\/)/;
 	let comp = text.split(pattern);
-
-
 
 	for (let i=0;i<comp.length-1; i++) {
 		// DATE PARSING
@@ -34,7 +31,7 @@ function analysisDo() {
 		// SENDER PARSING
 		let text = comp[i].substring(comp[i].indexOf('-'));
 		let sender = text.substring(2, text.indexOf(':'));
-		let msj = text.substring(text.indexOf(':')+2)
+		let msj = text.substring(text.indexOf(':')+2);
 
 		// DICTIONARY ENTRY BUILD
 		let data = {
@@ -47,4 +44,9 @@ function analysisDo() {
 
 	}
 	console.log(Data);
+	let total = Data.length;
+	console.log(total);
+    document.getElementById("total_num").innerHTML = total.toString();
+    document.getElementById("analysis-results").style.visibility = "visible";
+
 }
