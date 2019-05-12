@@ -1,4 +1,5 @@
 let input, button, button2, greeting;
+let progress = 0;
 
 function setup() {
     // create canvas
@@ -8,7 +9,7 @@ function setup() {
     input.position(20, 65);
 
     button = createButton('submit');
-    button.position(input.x + input.width, 65);
+    button.position(input.x, input.y + input.height + 5);
     button.mousePressed(showFile);
 
     greeting = createElement('h2', 'Upload document:');
@@ -16,6 +17,7 @@ function setup() {
 
     textAlign(CENTER);
     textSize(50);
+    noLoop();
 }
 
 function showFile() {
@@ -27,7 +29,7 @@ function showFile() {
     };
     rdr.readAsText(file);
     button2 = createButton('analyze');
-    button2.position(button.x + button.width, 65);
+    button2.position(button.x + button.width, button.y);
     button2.mousePressed(analysisDo);
     button2.style = 'hidden';
 }
@@ -41,7 +43,16 @@ function analysisDo() {
     let text_to_read = preview.innerHTML;
     let pattern = /\n(?=\d+\/\d+\/\d+)/;
     let comp = text_to_read.split(pattern);
+    let prev = new Date();
+    console.log(prev);
     for (let i=0;i<comp.length-1; i++) {
+        let act = new Date();
+        if (act - prev > 15) {
+            console.log(act);
+            rect(400, 400, 200*i/comp.length, 40);
+            prev = act;
+        }
+
         // DATE PARSING
         let date = comp[i].substring(0, comp[i].indexOf('-'));
         let split1 = date.split(" ");
@@ -67,6 +78,7 @@ function analysisDo() {
         };
         Data.push(data);
     }
+    background(255);
     //ANALYZE USERS
     let chunk = 1;
     for (let i=0; i < Data.length; i++){
@@ -95,7 +107,28 @@ function analysisDo() {
     let last = Data[total-1].date;
     let total_text = "Total: " + total.toString();
 
+
+
+    // PRESENTATION
     textSize(32);
     fill(0, 102, 153);
     text(total.toString(), 70, button.y + button.height + 32);
+    console.log(prev);
+
+    let lastAngle = 0;
+    for(let keys in Users) {
+        fill(random(255), random(255), 255 - 1.75*255*( Users[keys].count / total ));
+        textSize(15);
+        let angle = ( Users[keys].count / total )* 360;
+        text(keys, width/2 + 100*cos(lastAngle), height/2 + 100*sin(lastAngle));
+        arc(
+            width/2,
+            height/2,
+            100,
+            100,
+            lastAngle,
+            lastAngle + radians(angle));
+        lastAngle = lastAngle + radians(angle)
+
+    }
 }
