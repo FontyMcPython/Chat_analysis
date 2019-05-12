@@ -69,7 +69,6 @@ function analysisDo() {
 		}
 	}
 
-	console.log(Users);
 	let total = Data.length;
 	let start = Data[0].date;
 	let last = Data[total-1].date;
@@ -77,10 +76,11 @@ function analysisDo() {
 	for (let key in Users) {
 		total_text +=  "<br>" + "\n User: " + key + " Count: " + Users[key].count;
 	}
+
+
     document.getElementById("total_num").innerHTML = total_text;
     document.getElementById("start-date").innerHTML= "Start date: " + start.toDateString();
 	document.getElementById("end-date").innerHTML= "End date: " + last.toDateString();
 	document.getElementById("loading").style.display = "none";
     document.getElementById("analysis-results").style.visibility = "visible";
-
 }
