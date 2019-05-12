@@ -3,17 +3,17 @@ let progress = 0;
 
 function setup() {
     // create canvas
-    createCanvas(710, 400);
+    createCanvas(windowWidth, windowHeight);
 
     input = createInput("", "file");
-    input.position(20, 65);
+    input.position(width/2 - 250, 65);
 
     button = createButton('submit');
     button.position(input.x, input.y + input.height + 5);
     button.mousePressed(showFile);
 
     greeting = createElement('h2', 'Upload document:');
-    greeting.position(20, 5);
+    greeting.position(width/2 - 250, 5);
 
     textAlign(CENTER);
     textSize(50);
@@ -37,18 +37,19 @@ function showFile() {
 let Data = [];
 let Users = {};
 
+let total;
+let start;
+let last;
+
 function analysisDo() {
-    console.log("Analyzing");
     let preview = document.getElementById('show-text');
     let text_to_read = preview.innerHTML;
     let pattern = /\n(?=\d+\/\d+\/\d+)/;
     let comp = text_to_read.split(pattern);
     let prev = new Date();
-    console.log(prev);
     for (let i=0;i<comp.length-1; i++) {
         let act = new Date();
         if (act - prev > 15) {
-            console.log(act);
             rect(400, 400, 200*i/comp.length, 40);
             prev = act;
         }
@@ -102,28 +103,33 @@ function analysisDo() {
         }
     }
     // PARAMETERS
-    let total = Data.length;
-    let start = Data[0].date;
-    let last = Data[total-1].date;
-    let total_text = "Total: " + total.toString();
-
-
+    total = Data.length;
+    start = Data[0].date;
+    last = Data[total-1].date;
 
     // PRESENTATION
-    textSize(32);
+    background(240);
+    textSize(15);
     fill(0, 102, 153);
-    text(total.toString(), 70, button.y + button.height + 32);
+    text(
+        total.toString() + " messages between " + start.toDateString() + " and " + last.toDateString(),
+        width/2 - 250,
+        button.y + button.height + 32,
+        300,
+        200);
+
     console.log(prev);
 
     let lastAngle = 0;
+    strokeWeight(0);
     for(let keys in Users) {
-        fill(random(255), random(255), 255 - 1.75*255*( Users[keys].count / total ));
+        fill(255 - 1.75*255*( Users[keys].count / total ), 255 - 1.75*255*( Users[keys].count / total ), 255 - 1.75*255*( Users[keys].count / total ));
         textSize(15);
         let angle = ( Users[keys].count / total )* 360;
-        text(keys, width/2 + 100*cos(lastAngle), height/2 + 100*sin(lastAngle));
+        text(keys, width/2 + 100*cos(lastAngle), button.y + button.height + 200 + 100*sin(lastAngle));
         arc(
             width/2,
-            height/2,
+            button.y + button.height + 200,
             100,
             100,
             lastAngle,
