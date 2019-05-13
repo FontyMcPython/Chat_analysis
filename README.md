@@ -22,6 +22,11 @@ In order to use get this working, an exported .txt file is needed. The following
 
 To run a local copy, just download the files into a directory, add [P5 complete](https://p5js.org/download/) and open [index.html](index.html) with your browser.
 
+## Built With
+
+* JavaScript
+* [P5](https://p5js.org/download/) - Graphics
+
 ## License
 
 This project is licensed under the GNU License - see the [LICENSE.md](LICENSE.md) file for detail
