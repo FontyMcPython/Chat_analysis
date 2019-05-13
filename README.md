@@ -12,11 +12,9 @@ Feel free to contribute!
 
 In order to use get this working, an exported .txt file is needed. The following steps provide a simple guide to get this file.
 
-#### Open WhatsApp ( phone version) and go to any conversation
-
-#### Click on the Options ( three vertical dots) > More > Export Chat
-
-#### Do not include multimedia files
-
-#### Send it to your PC ( either mail, upload to drive, etc)
+1. Open WhatsApp ( phone version) and go to any conversation.
+2. Click on the Options ( three vertical dots) > More > Export Chat.
+3. Do not include multimedia files.
+4. Send it to your PC ( either mail, upload to drive, etc).
+5. Now the file is ready, just upload it and follow the instructions on the page.
 
