@@ -18,3 +18,6 @@ In order to use get this working, an exported .txt file is needed. The following
 4. Send it to your PC ( either mail, upload to drive, etc).
 5. Now the file is ready, just upload it and follow the instructions on the page.
 
+## License
+
+This project is licensed under the GNU License - see the [LICENSE.md](LICENSE.md) file for detail
