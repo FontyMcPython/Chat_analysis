@@ -1,6 +1,7 @@
 # Chat Analysis
 ![Twitter Follow](https://img.shields.io/twitter/follow/jos_font.svg?label=Follow&style=social)
 ![GitHub last commit](https://img.shields.io/github/last-commit/FontyMcPython/Chat_analysis.svg)
+![GitHub](https://img.shields.io/github/license/FontyMcPython/Chat_analysis.svg)
 
 WebPage project to extract statistical data from an individual or group chat. Currently, it works on exported chats from WhatsApp, but other options may be considered in the future. It utilizes JavaScript for processing and P5.js for the presentation of the data.
 
