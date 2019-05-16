@@ -99,6 +99,8 @@ function analysisDo() {
                 "count": 1,
                 "delay": [],
                 "chunk": [],
+                "bow" : {},
+                "multimedia": 0
             };
         }
     }
@@ -119,6 +121,9 @@ function analysisDo() {
         200);
 
     console.log(prev);
+    bag_words()
+
+    console.log(Users);
 
     let lastAngle = 0;
     strokeWeight(0);
@@ -136,5 +141,27 @@ function analysisDo() {
             lastAngle + radians(angle));
         lastAngle = lastAngle + radians(angle)
 
+    }
+}
+
+function bag_words() {
+    for(let i=0; i<Data.length; i++) {
+        if (Data[i].msj === "&lt;Multimedia omitido&gt;") {
+            Users[Data[i].sender].multimedia += 1;
+        }
+        else {
+            let list = Data[i]["msj"].split(/\W/);
+            for(let j=0; j < list.length; j++) {
+                if (!(list[j].match(/[\d]/)) && list[j] !== "") {
+                    list[j] = list[j].toLowerCase();
+                    if (list[j] in Users[Data[i].sender]["bow"]) {
+                        Users[Data[i].sender]["bow"][list[j]] += 1;
+                    }
+                    else {
+                        Users[Data[i].sender]["bow"][list[j]] = 1;
+                    }
+                }
+            }
+        }
     }
 }
