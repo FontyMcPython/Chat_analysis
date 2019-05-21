@@ -142,6 +142,15 @@ function analysisDo() {
         lastAngle = lastAngle + radians(angle)
 
     }
+    let test = [];
+    for( let i=0; i<Users["Font"]["delay"].length; i++) {
+        if (Users["Font"]["delay"][i] < 20) {
+            test.push(Users["Font"]["delay"][i]);
+        }
+    }
+
+    histogram(test, 20, 400, 400, 600, 500, 3);
+
 }
 
 function bag_words() {
@@ -172,4 +181,32 @@ function average(list) {
         sum += list[i];
     }
     return sum / list.length;
+}
+
+function histogram(list, bins, pos_x, pos_y, end_x, end_y, dist) {
+    // AXIS
+    let inferior = 0;
+    let superior;
+    let counts = [];
+    for (let i=1; i<=bins; i++) {
+        let count = 0;
+        superior = Math.max.apply(null, list)*i/bins;
+        for (let j=0; j<list.length; j++) {
+            if ((list[j]>= inferior) && (list[j] < superior)){
+                // COUNT OF VALUES INSIDE RANGE
+                count += 1;
+            }
+        }
+        counts.push(count);
+        inferior = superior;
+    }
+    let max = Math.max.apply(null, counts)
+    let ant_x = pos_x;
+    let width = (end_x - pos_x)/bins - dist;
+    for (let i=0; i<counts.length; i++) {
+
+        let height = (end_y - pos_y)*(counts[i]/max);
+        rect( ant_x, end_y - height, width, height);
+        ant_x += width + dist;
+    }
 }
