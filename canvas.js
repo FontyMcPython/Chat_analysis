@@ -149,7 +149,11 @@ function analysisDo() {
         }
     }
 
-    histogram(test, 20, 400, 400, 600, 500, 3);
+    let hist = histogram(test, 20, 400, 400, 600, 500, 0);
+    console.log(hist);
+    textSize(14);
+    let max = hist.counts[0];
+    text(max, 400 - 7 - textWidth(max), 400);
 
 }
 
@@ -186,6 +190,7 @@ function average(list) {
 function histogram(list, bins, pos_x, pos_y, end_x, end_y, dist) {
     // AXIS
     let inferior = 0;
+    let sup_list = [];
     let superior;
     let counts = [];
     for (let i=1; i<=bins; i++) {
@@ -198,9 +203,10 @@ function histogram(list, bins, pos_x, pos_y, end_x, end_y, dist) {
             }
         }
         counts.push(count);
+        sup_list.push(superior);
         inferior = superior;
     }
-    let max = Math.max.apply(null, counts)
+    let max = Math.max.apply(null, counts);
     let ant_x = pos_x;
     let width = (end_x - pos_x)/bins - dist;
     for (let i=0; i<counts.length; i++) {
@@ -209,4 +215,8 @@ function histogram(list, bins, pos_x, pos_y, end_x, end_y, dist) {
         rect( ant_x, end_y - height, width, height);
         ant_x += width + dist;
     }
+    return {
+        "counts": counts,
+        "sup_list": sup_list
+    };
 }
